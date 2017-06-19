@@ -346,6 +346,28 @@ typedef enum {
   #define PIN_BUTTON_3      25    // button 3
 
   #define PIN_FREE_LIST		{5,6,7,8,9,10,11,12,13,16,18,19,20,21,23,24,25,26}
+  
+  /** OSPiMini pin defines */
+  #elif defined(OSPIMINI)
+
+  #define OS_HW_VERSION    OSPI_HW_VERSION_BASE
+  #define PIN_SR_LATCH      22    // shift register latch pin
+  #define PIN_SR_DATA       27    // shift register data pin
+  #define PIN_SR_DATA_ALT   21    // shift register data pin (alternative, for $
+  #define PIN_SR_CLOCK       4    // shift register clock pin
+  #define PIN_SR_OE         17    // shift register output enable pin
+  #define PIN_RAINSENSOR     5    // rain sensor
+  #define PIN_FLOWSENSOR     5    // flow sensor (currently shared with rain se$
+  #define PIN_RF_DATA        6    // RF transmitter pin
+  #define PIN_BUTTON_1      16    // button 1
+  #define PIN_BUTTON_2      20    // button 2
+  #define PIN_BUTTON_3      21    // button 3
+
+  // DC controller pin defines
+  #define PIN_BOOST         18    // booster pin
+  #define PIN_BOOST_EN      23    // boost voltage enable pin
+
+  #define PIN_FREE_LIST         {7,8,9,10,11,12,13,19,24,25,26} 
 
   /** BBB pin defines */
   #elif defined(OSBO)
