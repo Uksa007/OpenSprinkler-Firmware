@@ -36,7 +36,7 @@ byte OpenSprinkler::hw_type;
 byte OpenSprinkler::nboards;
 byte OpenSprinkler::nstations;
 byte OpenSprinkler::station_bits[MAX_EXT_BOARDS+1];
-#if defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__)
+#if defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__) || defined(OSPIMINI)
 byte OpenSprinkler::engage_booster;
 #endif
 
@@ -534,7 +534,17 @@ void OpenSprinkler::begin() {
   pinMode(PIN_RF_DATA, OUTPUT);
   digitalWrite(PIN_RF_DATA, LOW);
 
+// Set up Booster for OSPiMini
+ #if defined(OSPIMINI)
+  hw_type = HW_TYPE_DC;
+  pinMode(PIN_BOOST, OUTPUT);
+  digitalWrite(PIN_BOOST, LOW);
+  pinMode(PIN_BOOST_EN, OUTPUT);
+  digitalWrite(PIN_BOOST_EN, LOW);
+  status.has_curr_sense = 0;   // No current sensing pin is present							
+ #else
   hw_type = HW_TYPE_AC;
+ #endif								   				  					   							 							   
 #if defined(ARDUINO)  // AVR SD and LCD functions
   // Init I2C
   Wire.begin();
@@ -706,9 +716,11 @@ void OpenSprinkler::apply_all_station_bits() {
     }
   }
 
-  #if defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__)
+  #if defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__) || defined(OSPIMINI)
   if((hw_type==HW_TYPE_DC) && engage_booster) {
-    DEBUG_PRINTLN(F("engage booster"));
+	  if !defined(OSPIMINI){
+		DEBUG_PRINTLN(F("engage booster"));
+	  }
     // for DC controller: boost voltage
     digitalWrite(PIN_BOOST_EN, LOW);  // disable output path
     digitalWrite(PIN_BOOST, HIGH);    // enable boost converter
@@ -954,7 +966,7 @@ byte OpenSprinkler::set_station_bit(byte sid, byte value) {
     if((*data)&mask) return 0;  // if bit is already set, return no change
     else {
       (*data) = (*data) | mask;
-#if defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__)
+#if defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__) || defined(OSPIMINI)
       engage_booster = true; // if bit is changing from 0 to 1, set engage_booster
 #endif
       switch_special_station(sid, 1); // handle special stations
