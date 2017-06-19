@@ -222,10 +222,14 @@ private:
   static void lcd_print_2digit(int v);  // print a integer in 2 digits
   static void lcd_start();
   static byte button_read_busy(byte pin_butt, byte waitmode, byte butt, byte is_holding);
-#if defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__) || defined(OSPIMINI)
+#if defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__)
   static byte engage_booster;
 #endif
 #endif // LCD functions
+
+#if defined(OSPIMINI)
+  static byte engage_booster; //Define the booster
+  #endif
 };
 
 #endif  // _OPENSPRINKLER_H

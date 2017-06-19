@@ -718,9 +718,9 @@ void OpenSprinkler::apply_all_station_bits() {
 
   #if defined(__AVR_ATmega1284P__) || defined(__AVR_ATmega1284__) || defined(OSPIMINI)
   if((hw_type==HW_TYPE_DC) && engage_booster) {
-	  if !defined(OSPIMINI){
+	  #if !defined(OSPIMINI)
 		DEBUG_PRINTLN(F("engage booster"));
-	  }
+	  #endif
     // for DC controller: boost voltage
     digitalWrite(PIN_BOOST_EN, LOW);  // disable output path
     digitalWrite(PIN_BOOST, HIGH);    // enable boost converter
