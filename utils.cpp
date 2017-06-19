@@ -206,7 +206,7 @@ char* get_filename_fullpath(const char *filename) {
   return fullpath;
 }
 
-#if defined(OSPI)
+#if defined(OSPI) || defined(OSPIMINI)
 unsigned int detect_rpi_rev() {
   FILE * filp;
   unsigned int rev;

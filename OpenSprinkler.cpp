@@ -66,11 +66,11 @@ char tmp_buffer[TMP_BUFFER_SIZE+1];       // scratch buffer
   LiquidCrystal OpenSprinkler::lcd;
   #include <SdFat.h>
   extern SdFat sd;
-#elif defined(OSPI)
+#elif defined(OSPI) || defined(OSPIMINI)
   // todo: LCD define for OSPi
 #endif
 
-#if defined(OSPI)
+#if defined(OSPI) || defined(OSPIMINI)
   byte OpenSprinkler::pin_sr_data = PIN_SR_DATA;
 #endif
 
@@ -483,7 +483,7 @@ void OpenSprinkler::begin() {
 
   pinMode(PIN_SR_CLOCK, OUTPUT);
 
-#if defined(OSPI)
+#if defined(OSPI) || defined(OSPIMINI)
   pin_sr_data = PIN_SR_DATA;
   // detect RPi revision
   unsigned int rev = detect_rpi_rev();
@@ -510,7 +510,7 @@ void OpenSprinkler::begin() {
   digitalWrite(PIN_RAINSENSOR, HIGH); // enabled internal pullup on rain sensor
   attachInterrupt(PIN_FLOWSENSOR_INT, flow_isr, FALLING);
 #else
-  // OSPI and OSBO use external pullups
+  // OSPI OSPIMINI and OSBO use external pullups
   attachInterrupt(PIN_FLOWSENSOR, "falling", flow_isr);
 #endif
 
@@ -697,7 +697,7 @@ void OpenSprinkler::apply_all_station_bits() {
 
     for(s=0;s<8;s++) {
       digitalWrite(PIN_SR_CLOCK, LOW);
-#if defined(OSPI) // if OSPI, use dynamically assigned pin_sr_data
+#if defined(OSPI) || defined(OSPIMINI) // if OSPI or OSPIMINI, use dynamically assigned pin_sr_data
       digitalWrite(pin_sr_data, (sbits & ((byte)1<<(7-s))) ? HIGH : LOW );
 #else
       digitalWrite(PIN_SR_DATA, (sbits & ((byte)1<<(7-s))) ? HIGH : LOW );

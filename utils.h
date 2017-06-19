@@ -60,7 +60,7 @@ void remove_file(const char *name);
   ulong millis();
   ulong micros();
   void initialiseEpoch();
-#if defined(OSPI)
+#if defined(OSPI) || defined(OSPIMINI)
   unsigned int detect_rpi_rev();
 #endif
 #endif  // NVM functions

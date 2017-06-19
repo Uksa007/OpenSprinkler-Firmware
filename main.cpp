@@ -710,7 +710,7 @@ void do_loop()
   }
 
   #if !defined(ARDUINO)
-    delay(1); // For OSPI/OSBO/LINUX, sleep 1 ms to minimize CPU usage
+    delay(1); // For OSPI/OSPIMINI/OSBO/LINUX, sleep 1 ms to minimize CPU usage
   #endif
 }
 

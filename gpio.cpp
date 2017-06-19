@@ -25,7 +25,7 @@
 
 #if defined(ARDUINO)
 
-#elif defined(OSPI) || defined(OSBO)
+#elif defined(OSPI) || defined(OSPIMINI) || defined(OSBO)
 
 #include <sys/types.h>
 #include <sys/ioctl.h>
